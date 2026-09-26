@@ -1,0 +1,17 @@
+{
+  "output_path": "data/partners.json",
+  "request_delay_seconds": 1.5,
+  "timeout_seconds": 20,
+  "user_agent": "BeScamReadyPartnerResearch/0.1 (educational internship; public contact pages only)",
+  "missing_value": "Did not find any info",
+  "city": "Manila",
+  "country": "Philippines",
+  "school_type": "universities",
+  "target_roles": [
+    "dean",
+    "student affairs",
+    "student welfare",
+    "tech organization",
+    "social issues organization"
+  ]
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Taglish Transcriber{% endblock %}</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <div class="ruler" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Taglish Transcriber, home">
+      <span class="cut" aria-hidden="true">T</span><span class="cut" aria-hidden="true">a</span><span
+        class="cut" aria-hidden="true">g</span><span class="cut" aria-hidden="true">l</span><span
+        class="cut" aria-hidden="true">i</span><span class="cut" aria-hidden="true">s</span><span
+        class="cut" aria-hidden="true">h</span>
+      <span class="brand-tail" aria-hidden="true">transcriber</span>
+    </a>
+    <nav>
+      <a href="/">Library</a>
+      <a href="/settings">Settings</a>
+    </nav>
+  </header>
+
+  {% if not ffmpeg_available %}
+  <div class="banner banner-warn">
+    FFmpeg was not found. Install it with <code>winget install Gyan.FFmpeg</code>, reopen your
+    terminal, and restart the app. Nothing can be transcribed until then.
+  </div>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+  <script type="module" src="/static/common.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

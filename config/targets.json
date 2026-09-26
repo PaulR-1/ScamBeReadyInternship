@@ -1,0 +1,162 @@
+{
+  "description": "Manila universities only. First pass is University of Santo Tomas public pages for Be Scam Ready outreach.",
+  "scope": {
+    "city": "Manila",
+    "school_type": "universities",
+    "roles": [
+      "College/university deans",
+      "Student affairs officials",
+      "Organizations focused on tech or social issues"
+    ]
+  },
+  "targets": [
+    {
+      "organization_school": "University of Santo Tomas — College of Information and Computing Sciences",
+      "unit": "College of Information and Computing Sciences",
+      "role": "Dean, College of Information and Computing Sciences",
+      "category": "Dean",
+      "preferred_email_prefix": "cics@",
+      "person_keywords": ["dean"],
+      "collect_phone": true,
+      "collect_email": true,
+      "urls": [
+        "https://www.ust.edu.ph/information-and-computing-sciences/"
+      ]
+    },
+    {
+      "organization_school": "University of Santo Tomas — College of Information and Computing Sciences",
+      "unit": "College of Information and Computing Sciences",
+      "role": "Student Welfare and Development Coordinator (CICS)",
+      "category": "Student affairs official",
+      "preferred_email_prefix": "",
+      "person_keywords": ["student welfare", "student welfare and development"],
+      "collect_phone": false,
+      "collect_email": false,
+      "urls": [
+        "https://www.ust.edu.ph/information-and-computing-sciences/",
+        "https://www.ust.edu.ph/administrative-offices/office-for-student-affairs/"
+      ]
+    },
+    {
+      "organization_school": "University of Santo Tomas — Office for Student Affairs",
+      "unit": "Office for Student Affairs",
+      "role": "Student Affairs director / formator",
+      "category": "Student affairs official",
+      "preferred_email_prefix": "osa@",
+      "person_keywords": ["director", "student formators", "assistant director"],
+      "collect_phone": true,
+      "collect_email": true,
+      "urls": [
+        "https://www.ust.edu.ph/administrative-offices/office-for-student-affairs/"
+      ]
+    },
+    {
+      "organization_school": "University of Santo Tomas — SIMBAHAYAN Community Development Office",
+      "unit": "SIMBAHAYAN Community Development Office",
+      "role": "Community development office (social issues / community partnership)",
+      "category": "Organization focusing on social issues",
+      "preferred_email_prefix": "simbahayan@",
+      "person_keywords": ["director", "assistant director", "community development"],
+      "collect_phone": true,
+      "collect_email": true,
+      "urls": [
+        "https://www.ust.edu.ph/community-development/"
+      ]
+    },
+    {
+      "organization_school": "University of Santo Tomas — Society of Information Technology Enthusiasts (SITE)",
+      "unit": "SITE (CICS student organization)",
+      "role": "Tech student organization",
+      "category": "Organization focusing on tech",
+      "preferred_email_prefix": "",
+      "person_keywords": ["president", "chairperson", "adviser"],
+      "collect_phone": false,
+      "collect_email": false,
+      "urls": [
+        "https://www.ust.edu.ph/information-and-computing-sciences/"
+      ]
+    },
+    {
+      "organization_school": "University of Santo Tomas — Computer Science Society",
+      "unit": "Computer Science Society (CICS)",
+      "role": "Tech student organization",
+      "category": "Organization focusing on tech",
+      "preferred_email_prefix": "",
+      "person_keywords": ["president", "chairperson", "adviser"],
+      "collect_phone": false,
+      "collect_email": false,
+      "urls": [
+        "https://www.ust.edu.ph/information-and-computing-sciences/"
+      ]
+    },
+    {
+      "organization_school": "University of Santo Tomas — Information Systems Society",
+      "unit": "Information Systems Society (CICS)",
+      "role": "Tech student organization",
+      "category": "Organization focusing on tech",
+      "preferred_email_prefix": "",
+      "person_keywords": ["president", "chairperson", "adviser"],
+      "collect_phone": false,
+      "collect_email": false,
+      "urls": [
+        "https://www.facebook.com/UST.ISSociety",
+        "https://www.ust.edu.ph/information-and-computing-sciences/"
+      ]
+    },
+    {
+      "organization_school": "University of Santo Tomas — UNESCO Club / socio-civic organizations",
+      "unit": "Recognized socio-civic student organizations",
+      "role": "Social-issues student organizations (UNESCO, EARTH, UNICEF volunteers, etc.)",
+      "category": "Organization focusing on social issues",
+      "preferred_email_prefix": "",
+      "person_keywords": ["president", "chairperson", "adviser"],
+      "collect_phone": false,
+      "collect_email": false,
+      "urls": [
+        "https://www.ust.edu.ph/campus-life/recognized-student-organizations/"
+      ]
+    },
+    {
+      "organization_school": "University of Santo Tomas — Technovation Society",
+      "unit": "Technovation Society",
+      "role": "Tech / innovation student organization",
+      "category": "Organization focusing on tech",
+      "preferred_email_prefix": "technovation.ust@",
+      "person_keywords": ["president"],
+      "collect_phone": true,
+      "collect_email": true,
+      "urls": [
+        "https://www.usttechsoc.org/contact-us",
+        "https://www.usttechsoc.org/organization",
+        "https://www.usttechsoc.org/"
+      ]
+    },
+    {
+      "organization_school": "University of Santo Tomas — AWS Learning Club (AWS UST)",
+      "unit": "AWS Learning Club - UST",
+      "role": "Tech student organization (AWS / cloud)",
+      "category": "Organization focusing on tech",
+      "preferred_email_prefix": "",
+      "person_keywords": ["chief executive officer"],
+      "collect_phone": true,
+      "collect_email": true,
+      "urls": [
+        "https://www.facebook.com/profile.php?id=61563942550637",
+        "https://www.aws-ust.org/"
+      ]
+    },
+    {
+      "organization_school": "University of Santo Tomas — Cisco Networking Academy Gateway (CNAG-CICS)",
+      "unit": "CNAG-CICS",
+      "role": "Tech student organization (Cisco / networking)",
+      "category": "Organization focusing on tech",
+      "preferred_email_prefix": "",
+      "person_keywords": ["president", "chairperson", "adviser"],
+      "collect_phone": true,
+      "collect_email": true,
+      "urls": [
+        "https://www.facebook.com/cnagics"
+      ]
+    }
+  ]
+}

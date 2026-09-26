@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Settings - Taglish Transcriber{% endblock %}
+{% block content %}
+
+<section class="card">
+  <h1>Settings</h1>
+  <form id="settings-form" class="settings-form">
+    <label>
+      <span>Model</span>
+      <select name="model">
+        {% for value, label in model_choices.items() %}
+        <option value="{{ value }}" {% if settings.model == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>
+      <span>Decoding language</span>
+      <select name="language">
+        {% for value, label in language_choices.items() %}
+        <option value="{{ value }}" {% if settings.language == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+      <small class="muted">
+        Tagalog keeps both halves of Taglish. Auto-detect can lock onto English and mangle the Tagalog.
+      </small>
+    </label>
+
+    <label>
+      <span>Compute device</span>
+      <select name="device">
+        {% for value, label in device_choices.items() %}
+        <option value="{{ value }}" {% if settings.device == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>
+      <span>Names and terms</span>
+      <textarea name="glossary" rows="3"
+                placeholder="Comma separated: Paulo, Be Scam Ready, CICS, GCash">{{ settings.glossary }}</textarea>
+      <small class="muted">Appended to the priming prompt so proper nouns are spelled correctly.</small>
+    </label>
+
+    <label>
+      <span>Priming prompt</span>
+      <textarea name="initial_prompt" rows="4">{{ settings.initial_prompt }}</textarea>
+      <small class="muted">A Taglish example sentence biases the model toward mixed-language output.</small>
+    </label>
+
+    <label>
+      <span>Beam size</span>
+      <input type="number" name="beam_size" min="1" max="10" value="{{ settings.beam_size }}">
+      <small class="muted">Higher is more accurate and slower. 5 is a good default.</small>
+    </label>
+
+    <label class="checkbox">
+      <input type="checkbox" name="vad_filter" {% if settings.vad_filter == '1' %}checked{% endif %}>
+      <span>Skip silence (voice activity detection)</span>
+    </label>
+
+    <label class="checkbox">
+      <input type="checkbox" name="word_timestamps" {% if settings.word_timestamps == '1' %}checked{% endif %}>
+      <span>Word-level timestamps (slower)</span>
+    </label>
+
+    <div class="row">
+      <button type="submit" class="primary">Save</button>
+      <span class="muted" id="settings-state"></span>
+    </div>
+  </form>
+</section>
+
+<section class="card">
+  <h2>This machine</h2>
+  <div class="meta-grid">
+    <div><span class="muted">GPU</span><strong>{{ hardware.gpu_name or "None detected" }}</strong></div>
+    <div><span class="muted">VRAM</span><strong>{{ "%.1f GB"|format(hardware.vram_total_gb) if hardware.vram_total_gb else "n/a" }}</strong></div>
+    <div><span class="muted">System RAM</span><strong>{{ "%.1f GB"|format(hardware.ram_total_gb) if hardware.ram_total_gb else "n/a" }}</strong></div>
+    <div><span class="muted">CUDA usable</span><strong>{{ "yes" if hardware.cuda_available else "no" }}</strong></div>
+    <div><span class="muted">Will run on</span><strong>{{ plan.device }} / {{ plan.compute_type }}</strong></div>
+    <div><span class="muted">FFmpeg</span><strong>{{ "found" if ffmpeg_available else "missing" }}</strong></div>
+  </div>
+  <p class="muted">{{ plan.reason }}</p>
+  {% for note in hardware.notes %}
+  <p class="muted">{{ note }}</p>
+  {% endfor %}
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script type="module" src="/static/settings.js"></script>
+{% endblock %}

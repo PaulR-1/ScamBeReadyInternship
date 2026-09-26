@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}{{ transcript.title }} - Taglish Transcriber{% endblock %}
+{% block content %}
+
+<section class="card" data-transcript-id="{{ transcript.id }}" id="transcript-root">
+  <div class="detail-head">
+    <div>
+      <h1 id="transcript-title">{{ transcript.title }}</h1>
+      <p class="muted mono">{{ transcript.source_path }}</p>
+    </div>
+    <div class="detail-actions">
+      <a class="button secondary" href="/">Back</a>
+      <button type="button" class="secondary" id="cancel-button" hidden>Cancel</button>
+      <button type="button" class="secondary" id="retry-button" hidden>Retry</button>
+    </div>
+  </div>
+
+  <div class="meta-grid" id="meta-grid"></div>
+  <div class="progress" id="progress-wrap" hidden>
+    <div class="progress-bar"><span id="progress-fill"></span></div>
+    <span class="muted" id="progress-label"></span>
+  </div>
+  <p class="error" id="transcript-error" hidden></p>
+
+  {% if transcript.source_exists %}
+  <audio id="player" controls preload="none"
+         src="/api/transcripts/{{ transcript.id }}/media"></audio>
+  {% else %}
+  <p class="muted">The source file is no longer on disk, so playback is unavailable.</p>
+  {% endif %}
+
+  <div class="export-row">
+    <span class="note">Export</span>
+    <a class="button secondary" href="/api/transcripts/{{ transcript.id }}/export?fmt=txt">TXT</a>
+    <a class="button secondary" href="/api/transcripts/{{ transcript.id }}/export?fmt=txt&amp;timestamps=false">TXT (no times)</a>
+    <a class="button secondary" href="/api/transcripts/{{ transcript.id }}/export?fmt=srt">SRT</a>
+    <a class="button secondary" href="/api/transcripts/{{ transcript.id }}/export?fmt=vtt">VTT</a>
+  </div>
+</section>
+
+<section class="card">
+  <div class="segments-head">
+    <h2>Transcript</h2>
+    <span class="muted" id="save-state"></span>
+  </div>
+  <div id="segments">
+    {% if not segments %}
+    <p class="muted empty" id="segments-empty">No text yet.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script type="module" src="/static/transcript.js"></script>
+{% endblock %}

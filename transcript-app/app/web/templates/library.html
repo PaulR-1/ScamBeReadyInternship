@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="mat-hero">
+  <p class="scrap">local</p>
+  <h1 class="ransom">
+    <span class="sr-only">Taglish</span>
+    <span class="ch c1" aria-hidden="true">T</span>
+    <span class="ch c2" aria-hidden="true">a</span>
+    <span class="ch c3" aria-hidden="true">g</span>
+    <span class="ch c4" aria-hidden="true">l</span>
+    <span class="ch c5" aria-hidden="true">i</span>
+    <span class="ch c6" aria-hidden="true">s</span>
+    <span class="ch c7" aria-hidden="true">h</span>
+  </h1>
+  <p class="scribble">voice memos, cut into words</p>
+</section>
+
+<section class="card">
+  <h2>Add a recording</h2>
+  <p class="note">
+    The file stays exactly where it is. Only the transcript is stored.
+  </p>
+  <form id="import-form" class="import-form" autocomplete="off">
+    <div class="row">
+      <input type="text" id="path-input" name="path" placeholder="D:\Recordings\memo.m4a" required>
+      <button type="button" id="browse-button" class="secondary">Browse</button>
+    </div>
+    <div class="row">
+      <input type="text" id="title-input" name="title" placeholder="Title (optional)">
+      <button type="submit" class="primary">Transcribe</button>
+    </div>
+    <p id="import-error" class="error" hidden></p>
+  </form>
+</section>
+
+<section class="card">
+  <h2>Library</h2>
+  <div id="transcript-list" class="list">
+    {% if not transcripts %}
+    <p class="muted empty">Nothing here yet.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script type="module" src="/static/library.js"></script>
+{% endblock %}
