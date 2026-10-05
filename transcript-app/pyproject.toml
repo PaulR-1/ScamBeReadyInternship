@@ -10,6 +10,7 @@ dependencies = [
     "python-multipart>=0.0.12",
     "faster-whisper>=1.1.0",
     "psutil>=6.0",
+    "pywebview>=5.0",
 ]
 
 [project.optional-dependencies]

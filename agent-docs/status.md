@@ -4,6 +4,46 @@ Newest entry first.
 
 ---
 
+## 2026-10-02 — Desktop window shell
+
+`python -m app` opens a WebView2 window on the existing pages. `python -m app --server` serves http://127.0.0.1:8756 with no window and no system browser. A taken port fails at bind, so that launch does not start a second lifespan.
+
+Verified from `transcript-app` with `.venv\Scripts\python.exe -m pytest tests` (50 passed, plus the existing Starlette deprecation warning). A real `UvicornSession` on a free loopback port returned the library page with HTTP 200, then shutdown finished and the port could be bound again. `pywebview` 6.2.1 is installed in the project virtualenv. `python -m app` on port 8761 logged application startup. The window title was not confirmed, and WebView2 audio seeking has not been tried.
+
+---
+
+## 2026-10-02 — Globe added to partnership outreach file
+
+Appended Globe Telecom to `data/partnership_outreach.json`. Published inboxes: `gtcorpcomm@globe.com.ph` (Yoly Crisanto / newsroom), `privacy@globe.com.ph` (DPO / OSAEC reports), plus named officers without personal emails (Anton Bonifacio, Derick Adil). Current Digital Thumbprint and #StopSPAM paths are web forms. IR, enterprise support, and procurement recorded as non-partnership. No guessed personal `@globe.com.ph` addresses.
+
+---
+
+## 2026-10-02 — DICT + GCash partnership outreach file
+
+Wrote `data/partnership_outreach.json`. DICT names/emails are the BetterGov industry, consumer-protection, cybersecurity, literacy, and secretary rows plus CERT-PH `cert-ph@dict.gov.ph`. GCash uses official Partner Solutions, Mynt corporate communications, and a 2022 GCash press-release public-sector inbox. No guessed personal GCash emails.
+
+---
+
+
+## 2026-09-28 — Architecture guide written
+
+Added `transcript-app/docs/Taglish-Transcriber-Architecture.pdf` (source HTML beside it). It explains the local transcriber layer by layer for study. No application behavior changed.
+
+Added `transcript-app/docs/Taglish-Transcriber-Explained-From-Zero.pdf`, the same system written for a reader who does not write code. No application behavior changed.
+
+Added `transcript-app/docs/flowcharts/`: three architecture charts (placeholders, Whisper named, full path with a note per block) and `settings.html`. No application behavior changed.
+
+Added a spoken summary at the top of `settings.html`, and `interview-answers.html` with 30 interview answers. Answer 4 now compares FastAPI and Uvicorn with Flask, Django, and Gunicorn. Answer 31 explains the full stack. No application behavior changed.
+
+---
+
+## 2026-09-26 — Transcript app published
+
+Public repo, transcript app only: https://github.com/PaulR-1/taglish-transcriber
+The scraper stays in this repository.
+
+---
+
 ## 2026-09-26 — Transcript UI restyled as a cutting mat
 
 Installed `frontend-design` and `redesign-existing-projects`. The library opens with a torn-letter

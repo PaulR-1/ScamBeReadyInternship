@@ -1,96 +1,108 @@
 # Taglish Transcriber
 
-Local-only transcription for voice memos and videos, tuned for **Taglish** (mixed Tagalog and
-English). Runs entirely on your machine: no accounts, no uploads, no cloud API.
+## What it is
 
-Your original recordings are never copied or moved. The app stores only the transcript.
+Taglish Transcriber is a **local-only** web app for turning voice memos and videos into text. It is aimed at **Taglish**—speech that mixes Tagalog and English in the same recording.
 
-## Requirements
+The app runs on your own computer. It does **not** upload your files to a cloud service. You point it at a file path on disk; it keeps the path and saves the transcript in a local database. Your original audio or video is never copied into the app folder.
 
-- Windows with Python 3.11 or newer (tested on 3.13, 64-bit)
-- FFmpeg
-- Optional: an NVIDIA GPU. Without one, everything still works on CPU, just slower.
+I built this for my **Software Engineering** class and used **Cursor** to help design and implement it.
 
-## Setup
+## Technical elements
+
+| Layer | Technology |
+| --- | --- |
+| **Speech model** | [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (OpenAI Whisper `large-v3` by default) |
+| **Backend** | Python 3.11+, [FastAPI](https://fastapi.tiangolo.com/), Uvicorn |
+| **Frontend** | Jinja HTML templates, vanilla CSS and JavaScript (no separate build step) |
+| **Storage** | SQLite (transcripts, segments, settings under `%LOCALAPPDATA%\TaglishTranscriber\`) |
+| **Media** | FFmpeg / ffprobe for format checks and audio extraction |
+| **Compute** | CPU or NVIDIA GPU (CUDA via CTranslate2); auto-picks precision based on VRAM |
+| **Exports** | TXT, SRT, and VTT with editable timestamped segments in the browser |
+
+Other behavior worth noting:
+
+- One transcription job at a time (background worker).
+- Optional glossary and Taglish priming prompt in Settings.
+- Model weights download once (~3 GB for `large-v3`), then offline use is possible.
+
+## Download and run on your machine
+
+### Requirements
+
+- **Windows** (primary target; paths and setup below are for Windows)
+- **Python 3.11 or newer** (64-bit)
+- **FFmpeg** on your PATH
+- **Git** (to clone the repo)
+- **Optional:** NVIDIA GPU and CUDA runtime packages for faster transcription
+
+### 1. Get the code
 
 ```powershell
-winget install Gyan.FFmpeg     # then close and reopen your terminal
+git clone https://github.com/PaulR-1/taglish-transcriber.git
+cd taglish-transcriber
+```
 
-cd transcript-app
+### 2. Install FFmpeg (if needed)
+
+```powershell
+winget install Gyan.FFmpeg
+```
+
+Close and reopen your terminal so `ffmpeg` is on your PATH.
+
+### 3. Python environment and dependencies
+
+```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+```
 
-# Optional, for NVIDIA GPUs:
+If PowerShell blocks the activation script:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+**Optional (NVIDIA GPU):**
+
+```powershell
 pip install nvidia-cublas-cu12 nvidia-cudnn-cu12
 ```
 
-If PowerShell refuses to run the activation script:
-`Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`
+Skip this if you only want CPU transcription (slower but works).
 
-## Run
+### 4. Start the app
+
+Open the app window:
 
 ```powershell
 python -m app
 ```
 
-This opens `http://127.0.0.1:8756`. The server listens on loopback only.
-
-The first transcription downloads the Whisper model (about 3 GB for `large-v3`). That happens once;
-after it, the app works offline.
-
-## Using it
-
-1. On the Library page, paste the full path to a recording, or click **Browse** to pick one.
-2. Click **Transcribe**. Progress updates live, and you can leave the page or cancel at any time.
-3. Open the transcript to play the audio, click a timestamp to jump there, and click any line to
-   correct it. Edits save when you click away or press Enter, and survive a restart. Corrected lines
-   are marked, and the model's original wording is kept so you can revert.
-4. Export **TXT**, **TXT without timestamps**, **SRT**, or **VTT**.
-
-## Taglish quality
-
-The **Settings** page controls this. Defaults are chosen for Taglish:
-
-- **Model `large-v3`** — clearly better at Tagalog than the smaller models.
-- **Decoding language `tl`** — keeps Tagalog words in Tagalog while English passes through as
-  English. Auto-detect can lock onto English and mangle the Tagalog half, which editing cannot
-  recover. Switch to `auto` or `en` if your recordings are mostly English.
-- **Names and terms** — add people, companies, and acronyms here. This is the single most effective
-  way to fix repeatedly misspelled proper nouns.
-- **Priming prompt** — a Taglish example sentence that biases the model toward mixed-language output.
-
-`agent-docs/taglish-notes.md` in the repository root explains the tradeoffs and how to evaluate a
-change properly.
-
-## Hardware
-
-Settings shows what was detected and what will actually be used. The app picks the best precision
-that fits your VRAM. On a 4 GB GPU it runs `large-v3` with 8-bit weights, because full precision
-needs roughly 4.7 GB. If the GPU fails before producing any text, the job automatically restarts on
-CPU rather than failing.
-
-CPU transcription with `large-v3` is roughly real-time or slower, so a 3-hour recording can take
-hours. Leave it running; progress is saved continuously and a restart will not lose completed work.
-
-## Configuration
-
-Copy `.env.example` to `.env` to change the port, storage locations, FFmpeg paths, or the maximum
-accepted recording length (default 200 minutes).
-
-Data lives in `%LOCALAPPDATA%\TaglishTranscriber\`: the SQLite database, the model cache, and
-`app.log`. Delete that folder to reset the app; your recordings are untouched.
-
-## Tests
+For a terminal, serve http://127.0.0.1:8756 with no window:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest
+python -m app --server
 ```
 
-Tests use a fake transcription engine and never download a model or touch the network.
+The host stays 127.0.0.1.
 
-## Limits
+Copy `.env.example` to `.env` if you want to change the port, max recording length, or FFmpeg paths.
 
-- One transcription at a time, by design, so a long job cannot exhaust VRAM.
-- No speaker labels, translation, or search yet.
-- If you move or rename a source file, its transcript survives but playback and re-running do not.
+### 5. Use it
+
+1. On **Library**, paste the full path to a recording or click **Browse**.
+2. Click **Transcribe** and wait for progress to finish.
+3. Open the transcript to play audio, edit lines, and export TXT / SRT / VTT.
+4. Adjust model, language, and glossary under **Settings** (applies to the next job; use **Retry** to re-run with new settings).
+
+The first run downloads the Whisper model into your user data folder. After that, transcription can run without internet.
+
+### Tests (optional)
+
+```powershell
+pip install -r requirements-dev.txt
+pytest
+```

@@ -96,3 +96,13 @@ transcript, so results stay traceable.
 Diarization (`pyannote`, needs a gated model download and a licence acceptance), translation,
 cross-transcript search, and batch queueing. All were considered; none are needed to answer "what was
 said in this memo". The schema does not block adding them later.
+
+---
+
+## D-010 — WebView2 window and headless server (2026-10-02)
+
+`python -m app` opens a WebView2 window. `python -m app --server` stays headless with no browser.
+A taken port does not start a second lifespan.
+
+**Tradeoff:** closing the window stops the process, so an in-progress transcription is interrupted
+and the next launch already marks it interrupted.
