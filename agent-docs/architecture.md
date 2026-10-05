@@ -2,9 +2,11 @@
 
 ## Flow
 
+The UI is a WebView2 window on 127.0.0.1.
+
 ```mermaid
 flowchart LR
-    Browser[Browser UI on 127.0.0.1] --> Api[FastAPI routes]
+    Window[WebView2 window on 127.0.0.1] --> Api[FastAPI routes]
     Api --> Store[(SQLite store)]
     Api --> Queue[Single background worker]
     Queue --> Media[FFmpeg probe and normalise]
@@ -19,7 +21,8 @@ flowchart LR
 
 | Path | Responsibility |
 | --- | --- |
-| `app/__main__.py` | Launches uvicorn bound to `127.0.0.1`. |
+| `app/__main__.py` | Opens the desktop window, or runs the headless server with `--server`. |
+| `app/desktop.py` | Binds `127.0.0.1`, shows the WebView2 window, and joins the server when the window closes. |
 | `app/main.py` | Builds the FastAPI app, mounts routes/static, starts and stops the worker. |
 | `app/core/paths.py` | Resolves the per-user data, models, and log directories. |
 | `app/core/config.py` | Env-backed defaults plus user settings persisted in SQLite. |

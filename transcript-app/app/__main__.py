@@ -2,23 +2,19 @@
 
 from __future__ import annotations
 
-import webbrowser
-
-import uvicorn
+import sys
 
 from app.core.config import get_config, load_dotenv
+from app.desktop import claim_app_identity, run_desktop, run_headless_server
 
 
 def main() -> None:
     load_dotenv()
-    config = get_config()
-    url = f"http://{config.host}:{config.port}"
-    print(f"Taglish Transcriber running at {url}  (Ctrl+C to stop)")
-    try:
-        webbrowser.open(url)
-    except Exception:
-        pass
-    uvicorn.run("app.main:app", host=config.host, port=config.port, log_level="info")
+    claim_app_identity()
+    if "--server" in sys.argv:
+        run_headless_server()
+        return
+    run_desktop(get_config())
 
 
 if __name__ == "__main__":
